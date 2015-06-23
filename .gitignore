@@ -1,8 +1,4 @@
 .idea
 node_modules
 npm-debug.log
-lib
-test-js
-coverage.html
-example.html
-example-compiled.md
+.DS_Store
