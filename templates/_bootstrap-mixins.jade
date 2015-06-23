@@ -100,6 +100,32 @@ mixin RequestResponse(title, request, resourceGroup, resource, action, index)
                 pre
                     code!= highlight(request.schema)
 
+mixin DataStructureBody(rcontent)
+    h5 Body
+    each section in rcontent.sections
+        if section.class == "memberType"
+            pre
+                code
+                    != highlight('{\n')
+                    each member in section.content
+                        if member.class == "property"
+                            - var property = member.content
+                            - var value = property.valueDefinition.values[0]
+                            - var valueType = property.valueDefinition.typeDefinition.typeSpecification.name
+                            if value
+                                - var exampleValue = (valueType == "string" ? '"' + value.literal + '"' : value.literal)
+                            else
+                                case valueType
+                                    when 'string': - var exampleValue = '""'
+                                    when 'number': - var exampleValue = '0'
+                                    default: - var exampleValue = '?'
+                            if valueType.literal
+                                - valueType = valueType.literal
+                            - var description = ''
+                            if property.description
+                                - var description = ' - ' + property.description
+                            != highlight('    "' + property.name.literal + '": ' + exampleValue + ', // ' + valueType + description + '\n')
+                    != highlight('}')
 
 mixin Examples(resourceGroup, resource, action)
     ul.list-group
