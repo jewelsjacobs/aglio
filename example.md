@@ -265,3 +265,16 @@ Get a single tag
 ### GET
 
 + Response 200
+
+    + Attributes (object)
+        + id (number) - unique id of the tag
+        + name: python (string)
+        + user (User) - user who created the tag
+
+
+# Data Structures
+
+## User (object)
+
++ firstName: Jules (string)
++ email: xxxxx@gmail.com (string)
